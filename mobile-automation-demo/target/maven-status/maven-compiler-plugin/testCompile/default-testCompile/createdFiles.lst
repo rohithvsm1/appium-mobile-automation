@@ -1,0 +1,4 @@
+base/BaseMobileTest.class
+tests/SubscriptionStatusTest.class
+api/SubscriptionApiClient.class
+pages/ApiDemosPage.class

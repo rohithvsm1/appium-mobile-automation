@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Mobile Automation Suite]" guice-stage="DEVELOPMENT" verbose="0">
+  <test thread-count="5" name="Mobile Tests(failed)" verbose="0">
+    <classes>
+      <class name="tests.SubscriptionStatusTest">
+        <methods>
+          <include name="setUp"/>
+          <include name="apiDemosNavigationWorks"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- tests.SubscriptionStatusTest -->
+    </classes>
+  </test> <!-- Mobile Tests(failed) -->
+</suite> <!-- Failed suite [Mobile Automation Suite] -->
