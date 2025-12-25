@@ -1,55 +1,29 @@
-Appium Mobile Automation Framework
+Appium Android Automation Framework
 
 Overview
 
-This repository contains a mobile test automation framework built with Appium, designed to validate native Android and iOS application flows using Page Object Model (POM) principles.
-The focus of this project is stability, maintainability, and real-world mobile testing practices, not demo-style scripting.
+Native Android test automation framework built with Appium (Java) to validate application flows using UiAutomator2 and Page Object Model (POM).
+Designed for stability, maintainability, and CI execution, with a focus on real-world Android automation practices.
 
-What This Project Validates
+Automation Architecture
 
-•	End-to-end mobile application flows
+•	Appium + UiAutomator2 for native Android automation
 
-•	Core user interactions on native mobile apps
+•	Page Object Model to isolate UI interactions from test logic
 
-•	Platform-aware automation strategies for Android and iOS
+•	Centralized driver lifecycle management
 
-•	Reliable test execution using stable locator strategies
+•	Deterministic setup and teardown for repeatable execution
 
-Automation Strategy
+Locator & Stability Strategy
 
-•	Appium for cross-platform mobile automation
+•	Primary locator: accessibilityId
 
-•	Page Object Model for clean separation of concerns
+•	Fallbacks: resource-id / class-based selectors
 
-•	Platform-specific handling where required (Android / iOS)
+•	XPath intentionally avoided for performance and resilience
 
-•	Tests designed to be readable, reusable, and CI-friendly
-
-Key Design Decisions
-
-Stable Locator Strategy
-
-•	Prioritizes accessibility identifiers over XPath
-
-•	Avoids brittle locators that break with UI changes
-
-•	Aligns automation with how real users interact with the app
-
-Page Object Model
-
-•	Screens are modeled as page classes
-
-•	Test logic is separated from UI interactions
-
-•	Makes the framework scalable as the app grows
-
-Platform Awareness
-
-1.	Handles Android and iOS differences explicitly
-
-2.	Avoids “one-size-fits-all” hacks
-
-3.	Keeps platform logic clear and maintainable
+•	Selectors chosen to align with Android accessibility standards
 
 Tech Stack
 
@@ -59,61 +33,29 @@ Tech Stack
 
 •	TestNG
 
-•	Android Emulator / iOS Simulator
-
 •	Maven
+
+•	Android Emulator / Physical Device
 
 Project Structure
 
-src/
- 
- ├── main/
- 
- │   └── pages/
- 
- │       ├── Android/
- 
- │       └── iOS/
- 
- └── test/
-     
-     └── tests/
+base/        → driver setup & capabilities
 
-How to Run
+pages/       → screen abstractions
 
-Prerequisites
+tests/       → scenario validation
 
-•	Java installed
-
-•	Appium server running
-
-•	Android Studio / Xcode installed
-
-•	Emulator or simulator available
-Execute Tests
+Execution
 
 mvn clean test
 
-Tests can be executed against Android or iOS by updating desired capabilities.
+Target device/emulator is configured via desired capabilities.
 
-CI/CD Readiness
+Key Principle
 
-•	Framework is designed to run in CI environments
+Stable Android automation depends on predictable selectors and disciplined structure. This framework emphasizes accessibility-first locators and clean separation of concerns to minimize flakiness.
 
-•	Supports headless emulator/simulator execution
+Why this matters
 
-•	Clean test setup and teardown for repeatable runs
-
-Key Takeaway
-
-Effective mobile automation depends less on writing more tests and more on choosing the right locators, structuring code cleanly, and respecting platform behavior.
-This project reflects how mobile automation is implemented in real QA teams — focusing on stability first, not shortcuts.
-
-Notes
-
-•	This is a learning and portfolio project
-
-•	Public demo applications are used where applicable
-
-•	Not intended to represent a production mobile app
+This approach mirrors enterprise Android QA frameworks, enabling reliable regression execution and CI integration without brittle UI dependencies.
 
