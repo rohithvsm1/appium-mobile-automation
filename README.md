@@ -1,49 +1,63 @@
-Appium Android Automation
+Appium Android Automation Framework
+
 Overview
-This repository contains a native Android test automation framework built using Appium (Java) and UiAutomator2.
-The framework is designed to validate end-to-end mobile application flows with an emphasis on stability, maintainability, and CI readiness.
-Project Scope
-Native Android automation only
-Page Object Model (POM) based design
-Accessibility-first locator strategy
-Suitable for emulator and physical device execution
+
+Native Android test automation framework built with Appium (Java) to validate application flows using UiAutomator2 and Page Object Model (POM).
+
+Designed for stability, maintainability, and CI execution, with a focus on real-world Android automation practices.
+
 Automation Architecture
-Appium Server for mobile automation
-UiAutomator2 driver for Android
-Page Object Model to separate test logic from UI interactions
+
+Appium + UiAutomator2 for native Android automation
+
+Page Object Model to isolate UI interactions from test logic
+
 Centralized driver lifecycle management
-Locator Strategy
-Primary: accessibilityId
-Secondary: resource-id
-XPath avoided to reduce flakiness and improve performance
+
+Deterministic setup and teardown for repeatable execution
+
+Locator & Stability Strategy
+
+Primary locator: accessibilityId
+
+Fallbacks: resource-id / class-based selectors
+
+XPath intentionally avoided for performance and resilience
+
+Selectors chosen to align with Android accessibility standards
+
 Tech Stack
+
 Appium
+
 Java
+
 TestNG
+
 Maven
+
 Android Emulator / Physical Device
+
 Project Structure
-src/
- ├── main/
- │   └── pages/        # Screen-level abstractions
- └── test/
-     └── tests/        # Test scenarios
-Prerequisites
-Java installed
-Node.js & npm
-Appium server
-Android Studio (emulator) or physical Android device
-Android SDK configured
-Running the Tests
-Start Appium
-appium
-Execute Tests
+
+base/        → driver setup & capabilities
+
+pages/       → screen abstractions
+
+tests/       → scenario validation
+
+Execution
+
 mvn clean test
-Desired capabilities can be configured for emulator or real device execution.
-CI/CD Readiness
-Framework supports headless emulator execution
-Deterministic setup and teardown
-Designed for repeatable execution in CI pipelines
+
+Target device/emulator is configured via desired capabilities.
+
 Key Principle
-Stable mobile automation depends on disciplined locator choices and clean architecture.
-This project focuses on reliability over quick wins or brittle scripts.
+
+Stable Android automation depends on predictable selectors and disciplined structure.
+
+This framework emphasizes accessibility-first locators and clean separation of concerns to minimize flakiness.
+
+Why this matters
+
+This approach mirrors enterprise Android QA frameworks, enabling reliable regression execution and CI integration without brittle UI dependencies.
