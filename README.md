@@ -1,63 +1,93 @@
-Appium Android Automation Framework
+# Appium Android Automation Framework
 
-Overview
+## Purpose
 
-Native Android test automation framework built with Appium (Java) to validate application flows using UiAutomator2 and Page Object Model (POM).
+This repository demonstrates a **production-oriented mobile automation framework**
+built using **Appium** for **native Android applications**.
 
-Designed for stability, maintainability, and CI execution, with a focus on real-world Android automation practices.
+The framework focuses on **stable, maintainable Android UI automation**
+that can be executed locally or integrated into CI pipelines.
 
-Automation Architecture
+---
 
-Appium + UiAutomator2 for native Android automation
+## What This Project Covers
 
-Page Object Model to isolate UI interactions from test logic
+The automation validates **core native Android behaviors**, including:
+- App launch and navigation
+- Interaction with native UI elements
+- User-driven flows executed on Android emulators or devices
+- Repeatable execution across test runs
 
-Centralized driver lifecycle management
+The emphasis is on **framework structure and test stability**, not application coverage.
 
-Deterministic setup and teardown for repeatable execution
+---
 
-Locator & Stability Strategy
+## Tooling
 
-Primary locator: accessibilityId
+- **Appium**
+- **Java**
+- **TestNG**
+- **Page Object Model (POM)**
+- Android Emulator / Android Device
+- CI-compatible execution
 
-Fallbacks: resource-id / class-based selectors
+---
 
-XPath intentionally avoided for performance and resilience
+## Core Design Principles
 
-Selectors chosen to align with Android accessibility standards
+- **Clear separation of test logic and UI interaction**
+- **Reusable Page Object design**
+- **Stable Android locator strategies**
+- **Deterministic execution**
+- **CI-friendly setup**
 
-Tech Stack
+These principles reduce flakiness and long-term maintenance cost.
 
-Appium
+---
 
-Java
+## Architecture Overview
 
-TestNG
+### Base Test Layer
+- Manages Appium driver lifecycle
+- Handles Android capabilities and initialization
+- Centralizes setup and teardown logic
 
-Maven
+### Page Objects
+- Encapsulate Android UI locators and actions
+- Keep UI logic isolated from test orchestration
+- Avoid embedding assertions or test flow
 
-Android Emulator / Physical Device
+### Test Layer
+- Defines user-centric Android scenarios
+- Orchestrates actions via Page Objects
+- Expresses intent, not implementation details
 
-Project Structure
+---
 
-base/        → driver setup & capabilities
+## Example Test Flow
 
-pages/       → screen abstractions
+1. Launch Android application  
+2. Navigate through primary screens  
+3. Perform user actions (tap, input, scroll)  
+4. Validate expected behavior  
+5. Close application  
 
-tests/       → scenario validation
+Tests focus on **user behavior**, not internal application state.
 
-Execution
+---
 
+## Android Locator Strategy
+
+- Prefer **accessibility IDs** where available
+- Use **resource-id** over XPath
+- Avoid brittle locators tied to layout structure
+- Centralize locator definitions per screen
+
+Stable locators are critical for Android automation reliability.
+
+---
+
+## Running the Tests
+
+```bash
 mvn clean test
-
-Target device/emulator is configured via desired capabilities.
-
-Key Principle
-
-Stable Android automation depends on predictable selectors and disciplined structure.
-
-This framework emphasizes accessibility-first locators and clean separation of concerns to minimize flakiness.
-
-Why this matters
-
-This approach mirrors enterprise Android QA frameworks, enabling reliable regression execution and CI integration without brittle UI dependencies.
