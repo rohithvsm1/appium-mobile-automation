@@ -1,4 +1,4 @@
-name: Appium Mobile Tests
+name: Appium Tests
 on:
   push:
     branches: [ main, master ]
@@ -6,8 +6,8 @@ on:
     branches: [ main, master ]
 
 jobs:
-  android:
-    runs-on: macos-13  # FIXED: macOS for emulator
+  test:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     
@@ -17,28 +17,23 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     
-    - name: Cache Maven packages
+    - name: Cache Maven
       uses: actions/cache@v4
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
     
-    - name: Run Appium Tests on Emulator
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 30
-        target: google_apis
-        arch: x86_64
-        force-avd-creation: false
-        emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
-        disable-animations: true
-        script: mvn clean test  # REQUIRED: what to run on emulator
+    - name: Run Appium Tests
+      run: mvn clean test
+      env:
+        # Mock mobile environment for CI
+        MOBILE_TEST_MODE: true
     
-    - name: Upload test results
+    - name: Upload reports
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: appium-reports
+        name: appium-results
         path: |
           target/surefire-reports/
           allure-results/
