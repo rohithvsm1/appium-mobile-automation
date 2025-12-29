@@ -20,6 +20,9 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
     
+    - name: Accept Android licenses
+      run: yes | sdkmanager --licenses
+    
     - name: Start Android Emulator
       uses: reactivecircus/android-emulator-runner@v2
       with:
@@ -30,6 +33,16 @@ jobs:
         emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
         disable-animations: true
     
+    - name: Wait for emulator
+      run: |
+        timeout=300
+        while [ $timeout -gt 0 ]; do
+          adb devices | grep emulator > /dev/null && break
+          sleep 5
+          timeout=$((timeout-5))
+        done
+        echo "Emulator ready!"
+    
     - name: Cache Maven packages
       uses: actions/cache@v4
       with:
@@ -38,6 +51,11 @@ jobs:
     
     - name: Run Appium Tests
       run: mvn clean test
+    
+    - name: Safe emulator shutdown
+      if: always()
+      run: |
+        adb devices | grep emulator | cut -f1 | xargs -r adb -s emu kill || true
     
     - name: Upload test results
       if: always()
