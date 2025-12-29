@@ -7,7 +7,7 @@ on:
 
 jobs:
   android:
-    runs-on: ubuntu-latest
+    runs-on: macos-13  # FIXED: macOS for emulator
     steps:
     - uses: actions/checkout@v4
     
@@ -17,13 +17,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
+    - name: Cache Maven packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
     
-    - name: Accept Android licenses
-      run: yes | sdkmanager --licenses
-    
-    - name: Start Android Emulator
+    - name: Run Appium Tests on Emulator
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 30
@@ -32,30 +32,7 @@ jobs:
         force-avd-creation: false
         emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
         disable-animations: true
-    
-    - name: Wait for emulator
-      run: |
-        timeout=300
-        while [ $timeout -gt 0 ]; do
-          adb devices | grep emulator > /dev/null && break
-          sleep 5
-          timeout=$((timeout-5))
-        done
-        echo "Emulator ready!"
-    
-    - name: Cache Maven packages
-      uses: actions/cache@v4
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-    
-    - name: Run Appium Tests
-      run: mvn clean test
-    
-    - name: Safe emulator shutdown
-      if: always()
-      run: |
-        adb devices | grep emulator | cut -f1 | xargs -r adb -s emu kill || true
+        script: mvn clean test  # REQUIRED: what to run on emulator
     
     - name: Upload test results
       if: always()
